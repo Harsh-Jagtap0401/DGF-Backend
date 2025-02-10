@@ -1,4 +1,7 @@
 //controllers/roleController.js
+
+const roleService = require('../services/roleService');
+
 exports.getSourcesByRole = async (req, res) => {
     const { role_id } = req.query;
 
