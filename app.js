@@ -11,6 +11,7 @@ const projectRoutes = require('./routes/projectRoutes'); // Import the project r
 const employeeRoutes = require('./routes/employeeSearchByNameRoutes'); // Import the employee routes
 const employeeSearchByEmailRoutes = require('./routes/employeeSearchByEmailRoutes'); // Import the employee search by email routes
 const serviceDivisionRoutes = require('./routes/serviceDivisionRoutes');  // Import the routes for service division
+const employeeLevelRoutes = require('./routes/employeeLevelRoutes'); // Import the employee level routes
 
 // Create an instance of the express app
 const app = express();
@@ -31,6 +32,7 @@ app.use('/api/project', projectRoutes); // Project-related routes
 app.use('/api/employee', employeeRoutes); // Employee-related routes
 app.use('/api/employee', employeeSearchByEmailRoutes); // Employee search by email route
 app.use('/api', serviceDivisionRoutes);
+app.use('/api/employee-level', employeeLevelRoutes); // Employee level routes
 
 // Error handling middleware (optional but useful for debugging)
 app.use((err, req, res, next) => {

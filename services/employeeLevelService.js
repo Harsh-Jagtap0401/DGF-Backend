@@ -4,7 +4,7 @@ const db = require('../config/db');
 // Function to get all job titles from the database
 const getAllJobTitles = () => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT id, job_title FROM org_employee_level';
+        const query = 'SELECT id, job_title FROM employee_level';
 
         db.execute(query, (err, results) => {
             if (err) {
