@@ -15,7 +15,6 @@ const createNewRequest = ({
     suggestedcompletioncriteria,
     comments,
     servicedivision,
-    employeelevel // This is passed as a JSON string
 }) => {
     return new Promise((resolve, reject) => {
         const query = `
@@ -32,9 +31,8 @@ const createNewRequest = ({
                 otherskill,
                 suggestedcompletioncriteria,
                 comments,
-                service_division,
-                employeelevel
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                service_division
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         `;
 
         const params = [
@@ -50,8 +48,7 @@ const createNewRequest = ({
             otherskills,
             suggestedcompletioncriteria,
             comments,
-            servicedivision,
-            employeelevel // Saving as a JSON string for now
+            servicedivision
         ];
 
         db.execute(query, params, (err, results) => {
