@@ -1,5 +1,5 @@
 // controllers/trainingController.js
-const trainingService = require('../services/trainingService'); // Import the service
+const trainingService = require('../services/trainingObjectivesService'); // Import the service
 
 // Function to get training objectives by source_id
 exports.getTrainingObjectivesBySource = async (req, res) => {

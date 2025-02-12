@@ -234,11 +234,18 @@ INSERT INTO role_source_assign (role_id, source_id) VALUES
     (9, 4),
     (10, 1),
     (10, 2),
-    (10, 3);
+    (10, 3),
+    (10, 4),
+    (10, 5),
+    (10, 6),
+    (10, 7),
+    (10, 8),
+    (10, 9),
+    (10, 10);
  
 -- Create the employee table
 CREATE TABLE employee (
-    emp_id VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci PRIMARY KEY,
+    emp_id VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci PRIMARY KEY,
     emp_name VARCHAR(100),
     emp_email VARCHAR(100)
 );
@@ -305,47 +312,49 @@ INSERT INTO service_division(service_name) values('Content Services'),('Tech Ser
 
 
 
+
+
+
+
+
+
+
 -- New Training Request Table
 CREATE TABLE `newtrainingrequest` (
-  `requestid` int NOT NULL AUTO_INCREMENT,
-  `source` int  NOT NULL,
-  `trainingobj` int ,
-  `requestonbehalfof` VARCHAR(255) ,
-  `requesttype` longtext COLLATE utf8mb4_unicode_ci ,
-  `projectid` int ,
-  `expecteddeadline` int ,
-  `techstack` int,
-  `primaryskill` int,
-  `otherskill` longtext COLLATE utf8mb4_unicode_ci ,
-  `suggestedcompletioncriteria` longtext COLLATE utf8mb4_unicode_ci ,
-  `comments` longtext COLLATE utf8mb4_unicode_ci,
-  `numberofpeople` bigint DEFAULT NULL,
-  `employeelevel` INT,
-  `requestedby` longtext COLLATE utf8mb4_unicode_ci,
-  `requestedbyid` bigint,
-  `createddate` bigint ,
-  `modifiedby` bigint,
+  `requestid` INT NOT NULL AUTO_INCREMENT,
+  `source` INT NOT NULL,
+  `trainingobj` INT,
+  `requestonbehalfof` VARCHAR(255),
+  `requesttype` LONGTEXT COLLATE utf8mb4_unicode_ci,
+  `projectid` INT,
+  `expecteddeadline` INT,
+  `techstack` INT,
+  `primaryskill` INT,
+  `otherskill` LONGTEXT COLLATE utf8mb4_unicode_ci,
+  `suggestedcompletioncriteria` LONGTEXT COLLATE utf8mb4_unicode_ci,
+  `comments` LONGTEXT COLLATE utf8mb4_unicode_ci,
+  `numberofpeople` BIGINT DEFAULT NULL,  
+  `requestedby` LONGTEXT COLLATE utf8mb4_unicode_ci,
+  `requestedbyid` BIGINT,
+  `createddate` BIGINT,
+  `modifiedby` BIGINT,
   `modifieddate` DATE,
-  `requeststatus` tinyint,
-  `approvedby` bigint,
-  `service_division` INT ,
+  `requeststatus` TINYINT,
+  `approvedby` BIGINT,
+  `service_division` INT,
   `newprospectname` VARCHAR(255),
-  `request_category` tinyint,
-  `learningtype` bigint,
-  `skilldevelopment` bigint,
+  `request_category` TINYINT,
+  `learningtype` BIGINT,
+  `skilldevelopment` BIGINT,
   PRIMARY KEY (`requestid`),
-  FOREIGN KEY (`source`) REFERENCES `source`(`source_id`), 
+  FOREIGN KEY (`source`) REFERENCES `source`(`source_id`),
   FOREIGN KEY (`trainingobj`) REFERENCES `training_obj`(`training_id`),
-  FOREIGN KEY (`projectid`) REFERENCES `projectname`(`ProjectID`), 
+  FOREIGN KEY (`projectid`) REFERENCES `projectname`(`ProjectID`),
   FOREIGN KEY (`techstack`) REFERENCES `techstack`(`stack_id`),
   FOREIGN KEY (`primaryskill`) REFERENCES `primaryskill`(`skill_id`),
-  FOREIGN KEY (`employeelevel`) REFERENCES `employee_level`(`id`),
-  FOREIGN KEY(`service_division`) REFERENCES `service_division`(`id`) ,
-  FOREIGN KEY(`requestonbehalfof`) references `employee`(`emp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='All training Request Data';
-select * from newtrainingrequest ;
-
-
+  FOREIGN KEY (`service_division`) REFERENCES `service_division`(`id`),
+  FOREIGN KEY (`requestonbehalfof`) REFERENCES `employee`(`emp_id`)
+);
 
 
  
@@ -367,3 +376,28 @@ CREATE TABLE emp_newtrainingrequested (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='new_training_requested_employee';
  
 select * from emp_newtrainingrequested;
+
+
+    CREATE TABLE employee_level (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    job_title VARCHAR(100)
+);
+INSERT INTO employee_level (job_title) VALUES
+('QA Lead'),
+('Scrum Master'),
+('Senior Engineer'),
+('Tech Lead'),
+('Tech Specialist'),
+('UI/UX Lead'),
+('UI/UX Specialist');
+ 
+ select * from employee_level;
+ 
+
+CREATE TABLE `training_request_employee_level` (
+  `requestid` INT NOT NULL,
+  `employee_level_id` INT NOT NULL,
+  PRIMARY KEY (`requestid`, `employee_level_id`),
+  FOREIGN KEY (`requestid`) REFERENCES `newtrainingrequest`(`requestid`),
+  FOREIGN KEY (`employee_level_id`) REFERENCES `employee_level`(`id`)
+);

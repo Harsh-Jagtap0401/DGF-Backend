@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); 
 const authRoutes = require('./routes/authRoutes');
 const roleRoutes = require('./routes/roleRoutes');
-const trainingRoutes = require('./routes/trainingRoutes');
+const trainingRoutes = require('./routes/trainingObjectivesRoutes');
 const techstackRoutes = require('./routes/techstackRoutes'); // Import the techstack routes
 const primarySkillRoutes = require('./routes/primarySkillRoutes'); // Import the primary skill routes
 const projectRoutes = require('./routes/projectRoutes'); // Import the project routes
@@ -12,6 +12,9 @@ const employeeRoutes = require('./routes/employeeSearchByNameRoutes'); // Import
 const employeeSearchByEmailRoutes = require('./routes/employeeSearchByEmailRoutes'); // Import the employee search by email routes
 const serviceDivisionRoutes = require('./routes/serviceDivisionRoutes');  // Import the routes for service division
 const employeeLevelRoutes = require('./routes/employeeLevelRoutes'); // Import the employee level routes
+const newTrainingRequestRoutes = require('./routes/newTrainingRequestRoutes'); // Import the new training request routes
+const trainingRequestEmployeeLevelRoutes = require('./routes/trainingRequestEmployeeLevelRoutes');
+
 
 // Create an instance of the express app
 const app = express();
@@ -33,6 +36,8 @@ app.use('/api/employee', employeeRoutes); // Employee-related routes
 app.use('/api/employee', employeeSearchByEmailRoutes); // Employee search by email route
 app.use('/api', serviceDivisionRoutes);
 app.use('/api/employee-level', employeeLevelRoutes); // Employee level routes
+app.use('/api/newtrainingrequest', newTrainingRequestRoutes); // New training request route
+app.use('/api/training-request', trainingRequestEmployeeLevelRoutes);
 
 // Error handling middleware (optional but useful for debugging)
 app.use((err, req, res, next) => {
