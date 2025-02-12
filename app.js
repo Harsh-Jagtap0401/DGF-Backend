@@ -15,6 +15,7 @@ const employeeLevelRoutes = require('./routes/employeeLevelRoutes'); // Import t
 const newTrainingRequestRoutes = require('./routes/newTrainingRequestRoutes'); // Import the new training request routes
 const trainingRequestEmployeeLevelRoutes = require('./routes/trainingRequestEmployeeLevelRoutes');
 const getMaxRequestIdRoutes = require('./routes/getMaxRequestIdRoutes');
+const getAllTrainingRequestsRoutes = require('./routes/getAllTrainingRequestsRoutes');
 
 // Create an instance of the express app
 const app = express();
@@ -39,6 +40,8 @@ app.use('/api/employee-level', employeeLevelRoutes); // Employee level routes
 app.use('/api/newtrainingrequest', newTrainingRequestRoutes); // New training request route
 app.use('/api/training-request', trainingRequestEmployeeLevelRoutes);
 app.use('/api/get-max-request-id', getMaxRequestIdRoutes); // New route for max request ID
+app.use('/api/training-requests', getAllTrainingRequestsRoutes); // Route for training requests
+
 
 
 // Error handling middleware (optional but useful for debugging)
