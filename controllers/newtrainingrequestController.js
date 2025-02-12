@@ -1,8 +1,12 @@
-const newTrainingRequestService = require('../services/newTrainingRequestService');
+//controllers/newTrainingRequestController.js
 
 // Controller method to handle creating a new training request
+
+const newTrainingRequestService = require('../services/newTrainingRequestService');
+
 exports.createNewTrainingRequest = async (req, res) => {
     const {
+        requestid, // Now included in the request body
         requestonbehalfof,
         source,
         trainingobj,
@@ -12,24 +16,22 @@ exports.createNewTrainingRequest = async (req, res) => {
         expecteddeadline,
         techstack,
         primaryskill,
-        otherskills,
+        otherskill,
         suggestedcompletioncriteria,
         comments,
         servicedivision,
-        employeelevel // Array of employee level IDs (e.g., [1, 2, 3])
     } = req.body;
 
     // Validate if all required fields are present
-    if (!requestonbehalfof || !source || !trainingobj || !projectid || !servicedivision) {
+    if (!requestid || !requestonbehalfof || !source || !trainingobj || !projectid || !servicedivision) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
 
-    // Serialize the employeelevel array into a JSON string
-    const serializedEmployeeLevel = JSON.stringify(employeelevel);
 
     try {
         // Call the service to create the training request, passing the serialized employeelevel
         const newRequest = await newTrainingRequestService.createNewRequest({
+            requestid,
             requestonbehalfof,
             source,
             trainingobj,
@@ -39,11 +41,11 @@ exports.createNewTrainingRequest = async (req, res) => {
             expecteddeadline,
             techstack,
             primaryskill,
-            otherskills,
+            otherskill,
             suggestedcompletioncriteria,
             comments,
             servicedivision,
-            employeelevel: serializedEmployeeLevel // Save it as a JSON string
+            
         });
 
         res.status(201).json({ message: 'Training request created successfully', data: newRequest });

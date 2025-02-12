@@ -1,7 +1,6 @@
 const db = require('../config/db');
-
-// Function to insert a new training request into the database
 const createNewRequest = ({
+    requestid, // Take requestid directly from the user input
     requestonbehalfof,
     source,
     trainingobj,
@@ -11,7 +10,7 @@ const createNewRequest = ({
     expecteddeadline,
     techstack,
     primaryskill,
-    otherskills,
+    otherskill, // Ensure this matches the DB column name
     suggestedcompletioncriteria,
     comments,
     servicedivision,
@@ -19,6 +18,7 @@ const createNewRequest = ({
     return new Promise((resolve, reject) => {
         const query = `
             INSERT INTO newtrainingrequest (
+                requestid,  
                 requestonbehalfof,
                 source,
                 trainingobj,
@@ -32,23 +32,24 @@ const createNewRequest = ({
                 suggestedcompletioncriteria,
                 comments,
                 service_division
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         `;
 
         const params = [
-            requestonbehalfof,
-            source,
-            trainingobj,
-            projectid,
-            newprospectname,
-            numberofpeople,
-            expecteddeadline,
-            techstack,
-            primaryskill,
-            otherskills,
-            suggestedcompletioncriteria,
-            comments,
-            servicedivision
+            requestid ?? null,  // Take requestid from user input, or set it to null if not provided
+            requestonbehalfof ?? null,
+            source ?? null,
+            trainingobj ?? null,
+            projectid ?? null,
+            newprospectname ?? null,
+            numberofpeople ?? null,
+            expecteddeadline ?? null,
+            techstack ?? null,
+            primaryskill ?? null,
+            otherskill ?? null, // Make sure this matches your DB column
+            suggestedcompletioncriteria ?? null,
+            comments ?? null,
+            servicedivision ?? null
         ];
 
         db.execute(query, params, (err, results) => {

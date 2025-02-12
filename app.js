@@ -14,7 +14,7 @@ const serviceDivisionRoutes = require('./routes/serviceDivisionRoutes');  // Imp
 const employeeLevelRoutes = require('./routes/employeeLevelRoutes'); // Import the employee level routes
 const newTrainingRequestRoutes = require('./routes/newTrainingRequestRoutes'); // Import the new training request routes
 const trainingRequestEmployeeLevelRoutes = require('./routes/trainingRequestEmployeeLevelRoutes');
-
+const getMaxRequestIdRoutes = require('./routes/getMaxRequestIdRoutes');
 
 // Create an instance of the express app
 const app = express();
@@ -38,6 +38,8 @@ app.use('/api', serviceDivisionRoutes);
 app.use('/api/employee-level', employeeLevelRoutes); // Employee level routes
 app.use('/api/newtrainingrequest', newTrainingRequestRoutes); // New training request route
 app.use('/api/training-request', trainingRequestEmployeeLevelRoutes);
+app.use('/api/get-max-request-id', getMaxRequestIdRoutes); // New route for max request ID
+
 
 // Error handling middleware (optional but useful for debugging)
 app.use((err, req, res, next) => {
