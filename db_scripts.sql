@@ -328,7 +328,7 @@ CREATE TABLE `newtrainingrequest` (
   `comments` LONGTEXT COLLATE utf8mb4_unicode_ci,
   `numberofpeople` BIGINT DEFAULT NULL,
   `requestedby` LONGTEXT COLLATE utf8mb4_unicode_ci,
-  `requestedbyid` BIGINT,
+  `requestedbyid` VARCHAR(100),
   `createddate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `modifiedby` BIGINT,
   `modifieddate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -346,7 +346,8 @@ CREATE TABLE `newtrainingrequest` (
   FOREIGN KEY (`techstack`) REFERENCES `techstack`(`stack_id`),
   FOREIGN KEY (`primaryskill`) REFERENCES `primaryskill`(`skill_id`),
   FOREIGN KEY (`service_division`) REFERENCES `service_division`(`id`),
-  FOREIGN KEY (`requestonbehalfof`) REFERENCES `employee`(`emp_id`)
+  FOREIGN KEY (`requestonbehalfof`) REFERENCES `employee`(`emp_id`),
+  FOREIGN KEY (`requestedbyid`) REFERENCES `employee`(`emp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='All training Request Data';
 
 select * from newtrainingrequest ;
@@ -370,7 +371,6 @@ CREATE TABLE emp_newtrainingrequested (
     CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES employee(emp_id),  -- Foreign key constraint
     FOREIGN KEY(requestid) REFERENCES newtrainingrequest(requestid) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='new_training_requested_employee';
-
 
 
 

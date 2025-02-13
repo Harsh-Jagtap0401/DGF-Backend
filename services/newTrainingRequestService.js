@@ -1,6 +1,9 @@
+// services/newTrainingRequestService.js
+
 const db = require('../config/db');
+
 const createNewRequest = ({
-    requestid, // Take requestid directly from the user input
+    requestid,
     requestonbehalfof,
     source,
     trainingobj,
@@ -10,10 +13,11 @@ const createNewRequest = ({
     expecteddeadline,
     techstack,
     primaryskill,
-    otherskill, // Ensure this matches the DB column name
+    otherskill,
     suggestedcompletioncriteria,
     comments,
     servicedivision,
+    requestedbyid, // Take requestedbyid from user input
 }) => {
     return new Promise((resolve, reject) => {
         const query = `
@@ -31,12 +35,13 @@ const createNewRequest = ({
                 otherskill,
                 suggestedcompletioncriteria,
                 comments,
-                service_division
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                service_division,
+                requestedbyid 
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         `;
 
         const params = [
-            requestid ?? null,  // Take requestid from user input, or set it to null if not provided
+            requestid ?? null,  
             requestonbehalfof ?? null,
             source ?? null,
             trainingobj ?? null,
@@ -46,10 +51,11 @@ const createNewRequest = ({
             expecteddeadline ?? null,
             techstack ?? null,
             primaryskill ?? null,
-            otherskill ?? null, // Make sure this matches your DB column
+            otherskill ?? null, 
             suggestedcompletioncriteria ?? null,
             comments ?? null,
-            servicedivision ?? null
+            servicedivision ?? null,
+            requestedbyid ?? null  // Add requestedbyid to params
         ];
 
         db.execute(query, params, (err, results) => {
