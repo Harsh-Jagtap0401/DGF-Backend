@@ -16,6 +16,7 @@ const newTrainingRequestRoutes = require('./routes/newTrainingRequestRoutes'); /
 const trainingRequestEmployeeLevelRoutes = require('./routes/trainingRequestEmployeeLevelRoutes');
 const getMaxRequestIdRoutes = require('./routes/getMaxRequestIdRoutes');
 const getAllTrainingRequestsRoutes = require('./routes/getAllTrainingRequestsRoutes');
+const empNewTrainingRequestedRoutes = require('./routes/empNewTrainingRequestedRoutes');
 
 // Create an instance of the express app
 const app = express();
@@ -41,7 +42,7 @@ app.use('/api/newtrainingrequest', newTrainingRequestRoutes); // New training re
 app.use('/api/training-request', trainingRequestEmployeeLevelRoutes);
 app.use('/api/get-max-request-id', getMaxRequestIdRoutes); // New route for max request ID
 app.use('/api/training-requests', getAllTrainingRequestsRoutes); // Route for training requests
-
+app.use('/api/empNewTrainingRequested', empNewTrainingRequestedRoutes);
 
 
 // Error handling middleware (optional but useful for debugging)

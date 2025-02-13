@@ -1,25 +1,35 @@
 const empNewTrainingRequestedService = require('../services/empNewTrainingRequestedService');
 
 exports.createEmpNewTrainingRequested = async (req, res) => {
-    const { emp_id, availablefrom, dailyband, availableonweekend, createddate } = req.body;
+    const data = req.body;  // Expect an array of records
 
     // Validate incoming data
-    if (!emp_id || !availablefrom || !dailyband || !availableonweekend || !createddate) {
-        return res.status(400).json({ message: 'All fields are required.' });
+    if (!Array.isArray(data) || data.some(item => !item.emp_id || !item.availablefrom || !item.dailyband || item.availableonweekend === undefined || !item.requestid)) {
+        return res.status(400).json({ message: 'All fields are required for each record.' });
     }
 
     try {
-        // Call the service to insert data into emp_newtrainingrequested
-        const result = await empNewTrainingRequestedService.insertEmpNewTrainingRequested(
-            emp_id,
-            availablefrom,
-            dailyband,
-            availableonweekend,
-            createddate
-        );
+        // Initialize an array to store the result for each employee
+        const results = [];
 
-        // Respond with success
-        res.status(201).json({ message: 'Data inserted successfully!', data: result });
+        // Loop through each record and insert it
+        for (const record of data) {
+            try {
+                const result = await empNewTrainingRequestedService.insertEmpNewTrainingRequested(
+                    record.emp_id,
+                    record.availablefrom,
+                    record.dailyband,
+                    record.availableonweekend,
+                    record.requestid
+                );
+                results.push({ emp_id: record.emp_id, success: true, message: 'Data inserted successfully', result });
+            } catch (err) {
+                results.push({ emp_id: record.emp_id, success: false, message: 'Error inserting data', error: err.message });
+            }
+        }
+
+        // Respond with the results for all records
+        res.status(201).json({ message: 'Bulk data insertion results', data: results });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Internal Server Error' });

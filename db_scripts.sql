@@ -353,7 +353,6 @@ select * from newtrainingrequest ;
 
 
 
-
  
 CREATE TABLE emp_newtrainingrequested (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -366,13 +365,13 @@ CREATE TABLE emp_newtrainingrequested (
     emailsentdate DATE,
     comment LONGTEXT COLLATE utf8mb4_unicode_ci,
     status VARCHAR(50) NOT NULL DEFAULT '0',
-    createddate DATE NOT NULL ,
+    createddate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Automatically set current timestamp
     PRIMARY KEY (id),
     CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES employee(emp_id),  -- Foreign key constraint
-    FOREIGN KEY(`requestid`) REFERENCES `newtrainingrequest`(`requestid`) 
+    FOREIGN KEY(requestid) REFERENCES newtrainingrequest(requestid) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='new_training_requested_employee';
- 
-select * from emp_newtrainingrequested;
+
+
 
 
 CREATE TABLE `training_request_employee_level` (
