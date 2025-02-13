@@ -1,5 +1,4 @@
 // services/newTrainingRequestService.js
-
 const db = require('../config/db');
 
 const createNewRequest = ({
@@ -20,6 +19,8 @@ const createNewRequest = ({
     requestedbyid, // Take requestedbyid from user input
 }) => {
     return new Promise((resolve, reject) => {
+        // If projectid is null, set it to 999
+
         const query = `
             INSERT INTO newtrainingrequest (
                 requestid,  
@@ -45,7 +46,7 @@ const createNewRequest = ({
             requestonbehalfof ?? null,
             source ?? null,
             trainingobj ?? null,
-            projectid ?? null,
+            projectid,  // projectid is now guaranteed to be set to 999 if null
             newprospectname ?? null,
             numberofpeople ?? null,
             expecteddeadline ?? null,

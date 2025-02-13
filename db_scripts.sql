@@ -180,6 +180,7 @@ CREATE TABLE projectname (
     ProjectName VARCHAR(255)
 );
 INSERT INTO projectname (ProjectID, ProjectName) VALUES 
+	(999, 'none'),
     (1, 'AI Chatbot'),
     (2, 'E-commerce Platform'),
     (3, 'Social Media Analytics'),
@@ -313,41 +314,41 @@ INSERT INTO service_division(service_name) values('Content Services'),('Tech Ser
 
 
 -- New Training Request Table
-CREATE TABLE `newtrainingrequest` (
-  `requestid` INT NOT NULL,
-  `source` INT NOT NULL,
-  `trainingobj` INT,
-  `requestonbehalfof` VARCHAR(255),
-  `requesttype` LONGTEXT COLLATE utf8mb4_unicode_ci,
-  `projectid` INT,
-  `expecteddeadline` date,
-  `techstack` INT,
-  `primaryskill` INT,
-  `otherskill` LONGTEXT COLLATE utf8mb4_unicode_ci,
-  `suggestedcompletioncriteria` LONGTEXT COLLATE utf8mb4_unicode_ci,
-  `comments` LONGTEXT COLLATE utf8mb4_unicode_ci,
-  `numberofpeople` BIGINT DEFAULT NULL,
-  `requestedby` LONGTEXT COLLATE utf8mb4_unicode_ci,
-  `requestedbyid` VARCHAR(100),
-  `createddate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `modifiedby` BIGINT,
-  `modifieddate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `requeststatus` VARCHAR(255) DEFAULT 'Approval Requested' COLLATE utf8mb4_unicode_ci,
-  `approvedby` BIGINT,
-  `service_division` INT,
-  `newprospectname` VARCHAR(255),
-  `request_category` TINYINT,
-  `learningtype` BIGINT,
-  `skilldevelopment` BIGINT,
-  PRIMARY KEY (`requestid`),
-  FOREIGN KEY (`source`) REFERENCES `source`(`source_id`),
-  FOREIGN KEY (`trainingobj`) REFERENCES `training_obj`(`training_id`),
-  FOREIGN KEY (`projectid`) REFERENCES `projectname`(`ProjectID`),
-  FOREIGN KEY (`techstack`) REFERENCES `techstack`(`stack_id`),
-  FOREIGN KEY (`primaryskill`) REFERENCES `primaryskill`(`skill_id`),
-  FOREIGN KEY (`service_division`) REFERENCES `service_division`(`id`),
-  FOREIGN KEY (`requestonbehalfof`) REFERENCES `employee`(`emp_id`),
-  FOREIGN KEY (`requestedbyid`) REFERENCES `employee`(`emp_id`)
+CREATE TABLE newtrainingrequest (
+  requestid INT NOT NULL,
+  source INT NOT NULL,
+  trainingobj INT,
+  requestonbehalfof VARCHAR(255),
+  requesttype LONGTEXT COLLATE utf8mb4_unicode_ci,
+  projectid INT,
+  expecteddeadline DATE,
+  techstack INT,
+  primaryskill INT,
+  otherskill LONGTEXT COLLATE utf8mb4_unicode_ci,
+  suggestedcompletioncriteria LONGTEXT COLLATE utf8mb4_unicode_ci,
+  comments LONGTEXT COLLATE utf8mb4_unicode_ci,
+  numberofpeople BIGINT DEFAULT NULL,
+  requestedby LONGTEXT COLLATE utf8mb4_unicode_ci,
+  requestedbyid VARCHAR(100),
+  createddate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  modifiedby BIGINT,
+  modifieddate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  requeststatus VARCHAR(255) DEFAULT 'Approval Requested' COLLATE utf8mb4_unicode_ci,
+  approvedby BIGINT,
+  service_division INT,
+  newprospectname VARCHAR(255),
+  request_category TINYINT,
+  learningtype BIGINT,
+  skilldevelopment BIGINT,
+  PRIMARY KEY (requestid),
+  FOREIGN KEY (source) REFERENCES source(source_id),
+  FOREIGN KEY (trainingobj) REFERENCES training_obj(training_id),
+  FOREIGN KEY (projectid) REFERENCES projectname(ProjectID),  -- Modify foreign key to allow NULL
+  FOREIGN KEY (techstack) REFERENCES techstack(stack_id),
+  FOREIGN KEY (primaryskill) REFERENCES primaryskill(skill_id),
+  FOREIGN KEY (service_division) REFERENCES service_division(id),
+  FOREIGN KEY (requestonbehalfof) REFERENCES employee(emp_id),
+  FOREIGN KEY (requestedbyid) REFERENCES employee(emp_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='All training Request Data';
 
 select * from newtrainingrequest ;
@@ -383,3 +384,7 @@ CREATE TABLE `training_request_employee_level` (
 );
 
 select * from training_request_employee_level;
+
+
+
+SHOW CREATE TABLE newtrainingrequest;
