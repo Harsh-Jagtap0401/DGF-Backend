@@ -360,7 +360,7 @@ CREATE TABLE emp_newtrainingrequested (
     id BIGINT NOT NULL AUTO_INCREMENT,
     emp_id VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,  -- Ensure matching charset and collation
     availablefrom DATE NOT NULL,
-    dailyband BIGINT NOT NULL,
+    dailyband VARCHAR(100) NOT NULL,
     availableonweekend BOOLEAN NOT NULL,
     requestid INT NOT NULL,
     emailsentstatus BIGINT DEFAULT '0',
